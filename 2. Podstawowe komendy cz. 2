@@ -1,0 +1,20 @@
+6. Jaki jest największy numer grupy lokalnej w systemie?
+7.Ile jest w systemie grup, które nie są grupą podstawową dla co najmniejjednego użytkownika?
+8.Ile grup w systemie nie jest grupami dodatkowymi dla żadnego użyt-kownika?
+9. Wypisz użytkowników, których nazwa składa się z dokładnie 8 znaków.
+10.W katalogu domowym utwórz plik zawierający strony manuala dlakomendyls. Jakie są różnice w działaniu operatorów przekierowania>oraz>>?
+
+Ad 6.
+cat /etc/group | awk -F: '{print $3}' | sort -n | tail -1
+
+Ad 7. 
+echo $(( $(cat /etc/group | wc -l) - $(cat /etc/passwd | awk -F: '{print $4}' | sort -n | uniq | wc -l) ))
+
+Ad 8.
+cat /etc/group | awk -F: '{print $4}' | grep -E -c ^$ 
+
+Ad 9.
+cat /etc/passed | awk -F: '{print $1}' | grep -E [^:]{8}
+
+Ad. 10
+man ls > %HOME/ls.txt
