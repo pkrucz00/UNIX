@@ -1,0 +1,28 @@
+1. Ilu uzytkownikow lokalnych jest zdefiniowanych w systemie?
+2.Jak w systemie opisany został (zawartość 5-tej kolumny pliku/etc/passwd) użytkownik, którego numer identyfikacyjny wynosi 14?
+3.Ilu jest użytkowników w systemie, których grupa podstawowa jest Twoją grupą?
+4.Ilu użytkowników zdefiniowanych w systemie używa jako podstawowe-go interpretera poleceń interpretera Bash?
+5.Ilu użytkowników w systemie posiada numer identyfikacyjny UIDwiększy od 12000?
+6.Jak wylistować zawartość kilku katalogów na raz (w jednej komendzie)?
+7.Jak wypisać za pomocą jednej komendy echo cyfry od 0 do 5, każdąw osobnej linii?
+
+Ad 1.
+cat /etc/passwd | wc -l
+
+Ad 2.
+cat /etc/passwd | awk -F: '{if($3 == 14) print $5}'
+
+Ad 3.
+cat /etc/passwd | awk -F: '{if($4 == "`id -g`") print $4}' | wc -l
+
+Ad 4.
+cat /etc/passwd | awk -F: '{print $7}' | grep -E -c *bash*
+
+Ad 5.
+cat /etc/passwd | awk -F: '{if($3 > 12000) print $3}' | wc -l
+
+Ad 6.
+ls -R ?????? (Ewentualnie ls kat_a kat_b kat_c ... )
+
+Ad 7.
+echo "0\n1\n2\n3\n4\n5"
